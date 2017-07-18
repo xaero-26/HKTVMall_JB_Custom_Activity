@@ -1,0 +1,62 @@
+{
+    "workflowApiVersion": "1.0",
+    "metaData": {
+        "version": "2.0",
+        "icon": "images/KFC-JB-Icon.png",
+        "iconSmall": "images/KFC-JB-Icon.png"
+    },
+    "type": "REST",
+    "lang": {
+        "en-US": {
+            "name": "KFC Push",
+            "description": "Activity for KFC custom push messages"
+        }
+    },
+    "arguments": {
+        "execute": {       
+			"inArguments":[
+				{ "firstName":"{{Contact.Attribute.KFC_SingleCustomerView.FirstName}}"},
+				{ "lastName":"{{Contact.Attribute.KFC_SingleCustomerView.LastName}}"},
+				{ "deviceID":"{{Contact.Attribute.KFC_SingleCustomerView.Carnival_Device_Id}}"},
+				{ "emailAddress": "{{Contact.Default.Email}}"}	
+			],
+            "outArguments": [
+            	{ "pushId":"number" }
+			],			
+			"url": "https://hktvmall-jb-custom-activity.herokuapp.com/ixn/activities/offer/execute/",
+            "verb": "POST",
+            "body": "",
+            "header": "",
+            "format": "json",
+            "useJwt": false,
+            "timeout": 10000
+        }
+    },
+    "configurationArguments": {
+    	"applicationExtensionKey": "hktvmall-jb-custom-activity",
+        "defaults": { "example_default_key": "example_default_value"},             
+        "save": {
+        	"url": "https://hktvmall-jb-custom-activity.herokuapp.com/ixn/activities/offer/save/",
+            "body": "",
+            "verb": "POST",
+            "useJwt": false
+        },
+        "publish": {
+        	"url": "https://hktvmall-jb-custom-activity.herokuapp.com/ixn/activities/offer/publish/",
+            "verb": "POST",
+            "body": "",
+            "useJwt": false
+        },
+        "validate": {
+        	"url": "https://hktvmall-jb-custom-activity.herokuapp.com/ixn/activities/offer/validate/",
+            "verb": "POST",
+            "body": "",
+            "useJwt": false            
+        }
+    },
+    "edit": {
+    	"url": "https://hktvmall-jb-custom-activity.herokuapp.com/ixn/activities/offer/",
+        "height": 400,
+        "width": 800
+    }
+}
