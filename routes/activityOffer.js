@@ -83,8 +83,10 @@ exports.execute = function( req, res ) {
 	var Email = oArgs.emailAddress;
 	var FirstName = oArgs.firstName;
 	var LastName = oArgs.lastName;
-	var deviceid = oArgs.deviceID;
-	
+	var deviceid = "serena_deviceid";//"oArgs.deviceID";
+	activityUtils.logData('Serena: Email=' + Email );
+	activityUtils.logData('Serena: FirstName=' + FirstName );
+	activityUtils.logData('Serena: LastName=' + LastName );
 
 	// these values come from the custom activity form inputs
 	var pushMessage = oArgs.pushMessage;
