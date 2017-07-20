@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Configure Push Message</title>
+	<script data-main="js/main.js" src="js/require.js"></script>
+
+	<!--Styles-->
+	<link rel="stylesheet" type="text/css" href="css/styles.css" />
+	
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://www.fuelcdn.com/fuelux/3.13.0/css/fuelux.min.css" rel="stylesheet">
+    <link href="https://www.fuelcdn.com/fuelux-mctheme/1.1.0/css/fuelux-mctheme.min.css" type="text/css" id="mctheme" rel="stylesheet">
+
+<style>
+.modal-body.ftux-modal .body-container .left-pane {
+    float: left;
+    width: 40%;
+    text-align: left;
+    vertical-align: top;
+}
+
+
+.modal-body.ftux-modal .body-container .right-pane {
+    float: left;
+    width: 60%;
+    vertical-align: top;
+    padding-left: 15px;
+}
+</style>
+
+
+</head>
+<body class="fuelux">
+
+
+<div class="modal-body ftux-modal">
+    <div class="header">
+        <h1>Custom <strong class="ftux-title">Push</strong></h1>
+    </div>
+    <div class="body-container">
+        <div class="left-pane">
+            <div class="contacts"></div>
+            
+            <div id="step1" class="step">
+            
+            	<div class="contacts-info">
+             	   <h2>Message</h2>
+                	<p>Data that has been mapped can be used to define entry events for subscribers and dynamic decision logic in Journey Builder.</p>
+            		<textarea class="form-control" id="pushMessage" name="textarea" rows="4"></textarea>
+            	</div>
+            	
+            </div>
+			<div id="step2" class="step">
+			
+				<p>Please review your settings.</p>
+				<span id="showPushMessage"></span><br />
+			
+				<!--
+				Value Tier: <span id="showValueTier"></span><br />
+				Type: <span id="showType"></span><br />
+				Bonus: <span id="showBonus"></span><br />
+				-->
+		
+
+			</div>
+		
+
+        </div>
+        <div class="right-pane">
+            <h2>How to Use - Journey Builder Personalized Messages</h2>
+            <div class="picture">Copy Paste Available fields in the following Format - &lt%FILEDNAME%&gt</div>
+            <div class="picture">First Name - &lt%FirstName%&gt</div>
+            <div class="picture">Last Name - &lt%LastName%&gt</div>
+            <div class="picture">Email - &lt%Email%&gt</div>
+        </div>
+        
+        <p><small id="version"></small></p>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+		<!-- 
+		<table>
+			<tr>
+				<th>Message</th>
+				<th>Type</th>
+				<th>Offer</th>
+			</tr>
+			<tr>
+				<td>
+					<select id="selectValueTier">
+						<option value="">Select an option</option>
+						<option value="all">ALL</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="none">NONE</option>
+					</select>
+				</td>
+				<td>
+					<select id="selectType">
+						<option value="">Select an option</option>
+						<option value="trigger">Trigger</option>
+						<option value="token">Token</option>
+					</select>
+				</td>
+				<td>
+					<select id="selectBonus">
+						<option value="">Select an option</option>
+						<option value="1">Free Bet</option>
+						<option value="2">Double Trouble</option>
+						<option value="3">Cash Back</option>
+						<option value="4">Reload Bonus</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+		-->
+		
+
+		
+</body>
+</html>
