@@ -144,7 +144,7 @@ define( function( require ) {
         }
     };
 
-    function getValueTier() {
+    /*function getValueTier() {
         return $('#selectValueTier').find('option:selected').attr('value').trim();
     };
     function getType() {
@@ -162,7 +162,7 @@ define( function( require ) {
     };
     function getBonusText() {
         return $('#selectBonus').find('option:selected').text().trim();
-    };
+    };*/
     
     function getPushMessage() {
         return $('#pushMessage').val().trim();
