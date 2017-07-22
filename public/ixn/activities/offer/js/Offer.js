@@ -144,25 +144,43 @@ define( function( require ) {
         }
     };
 
-    /*function getValueTier() {
-        return $('#selectValueTier').find('option:selected').attr('value').trim();
+    function getValueTier() {
+        if ($('#selectValueTier').find('option:selected').attr('value') != null)
+            return $('#selectValueTier').find('option:selected').attr('value').trim();
+        else
+            return null;
     };
     function getType() {
-        return $('#selectType').find('option:selected').attr('value').trim();
+        if ($('#selectType').find('option:selected').attr('value') != null)
+            return $('#selectType').find('option:selected').attr('value').trim();
+        else
+            return null;
     };
     function getBonus() {
-        return $('#selectBonus').find('option:selected').attr('value').trim();
+        if ($('#selectBonus').find('option:selected').attr('value') != null)
+            return $('#selectBonus').find('option:selected').attr('value').trim();
+        else
+            return null;
     };
 
     function getValueTierText() {
-        return $('#selectValueTier').find('option:selected').text().trim();
+        if ($('#selectValueTier').find('option:selected').text() != null)
+            return $('#selectValueTier').find('option:selected').text().trim();
+        else
+            return null;
     };
     function getTypeText() {
-        return $('#selectType').find('option:selected').text().trim();
+        if ($('#selectType').find('option:selected').text() != null)
+            return $('#selectType').find('option:selected').text().trim();
+        else
+            return null;
     };
     function getBonusText() {
-        return $('#selectBonus').find('option:selected').text().trim();
-    };*/
+        if ($('#selectBonus').find('option:selected').text() != null)
+            return $('#selectBonus').find('option:selected').text().trim();
+        else
+            return null;
+    };
     
     function getPushMessage() {
         return $('#pushMessage').val().trim();
