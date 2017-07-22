@@ -124,7 +124,7 @@ exports.execute = function( req, res ) {
 
 	var options = {
 		'hostname': activityUtils.endpOintcreds.host,
-		'path': '/v3/notifications',
+		'path': '/post',
 		'method': 'POST',
 		'headers': {
 			'Accept': 'application/json',
