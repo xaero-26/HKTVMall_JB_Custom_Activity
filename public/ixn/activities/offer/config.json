@@ -23,7 +23,7 @@
             "outArguments": [
             	{ "pushId":"number" }
 			],			
-			"url": "https://hktvmall-jb-custom-activity.herokuapp.com/ixn/activities/offer/execute/",
+			"url": "https://fierce-ravine-95058.herokuapp.com/ixn/activities/offer/execute/",
             "verb": "POST",
             "body": "",
             "header": "",
@@ -36,26 +36,26 @@
     	"applicationExtensionKey": "jb-custom-activity-test",
         "defaults": { "example_default_key": "example_default_value"},             
         "save": {
-        	"url": "https://hktvmall-jb-custom-activity.herokuapp.com/ixn/activities/offer/save/",
+        	"url": "https://fierce-ravine-95058.herokuapp.com/ixn/activities/offer/save/",
             "body": "",
             "verb": "POST",
             "useJwt": false
         },
         "publish": {
-        	"url": "https://hktvmall-jb-custom-activity.herokuapp.com/ixn/activities/offer/publish/",
+        	"url": "https://fierce-ravine-95058.herokuapp.com/ixn/activities/offer/publish/",
             "verb": "POST",
             "body": "",
             "useJwt": false
         },
         "validate": {
-        	"url": "https://hktvmall-jb-custom-activity.herokuapp.com/ixn/activities/offer/validate/",
+        	"url": "https://fierce-ravine-95058.herokuapp.com/ixn/activities/offer/validate/",
             "verb": "POST",
             "body": "",
             "useJwt": false            
         }
     },
     "edit": {
-    	"url": "https://hktvmall-jb-custom-activity.herokuapp.com/ixn/activities/offer/",
+    	"url": "https://fierce-ravine-95058.herokuapp.com/ixn/activities/offer/",
         "height": 400,
         "width": 800
     }
