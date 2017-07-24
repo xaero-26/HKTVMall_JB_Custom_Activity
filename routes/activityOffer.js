@@ -113,7 +113,10 @@ exports.execute = function( req, res ) {
     "pushInfo": [{"muid": muid, msg: pushMessage}]
 	});
 
-	var endpoint = activityUtils.endpOintcreds.host + '/posts';
+	var endpoint = "https://jsonplaceholder.typicode.com/posts";
+	var remoteHost = "jsonplaceholder.typicode.com";
+	var remotePort = "443";
+	var remotePath = "/posts";
 	var secret = "NLNVFS9x7qmKrWWYLbUAq3TgQH8JjUFW";
 	var signature = endpoint + pushInfo + secret;
 	var hash_signature = crypto.createHash('md5').update(signature).digest('hex');
@@ -126,11 +129,12 @@ exports.execute = function( req, res ) {
     	"s": hash_signature
 	});
 	
-	console.log(post_data);
+	console.log('serena: post_data=' + post_data);
 
 	var options = {
-		'hostname': activityUtils.endpOintcreds.host,
-		'path': '/posts',
+		'hostname': remoteHost,
+		'port': remotePort,
+		'path': remotePath,
 		'method': 'POST',
 		'headers': {
 			'Accept': 'application/json',
@@ -140,7 +144,7 @@ exports.execute = function( req, res ) {
 		},
 	};				
 	
-	console.log(options);
+	console.log('serena: options=' + options);
 
 	var httpsCall = https.request(options, function(response) {
 		var data = '';
