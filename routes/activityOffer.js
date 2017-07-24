@@ -160,6 +160,7 @@ exports.execute = function( req, res ) {
 			if (response.statusCode == 201) {
 				data = JSON.parse(data);
 				console.log('onEND PushResponse:', response.statusCode, data);
+				console.log('Serena: data.id=' + data.id);
 				res.send( 200, {"pushId": data.id} );
 			} else {
 				console.log('onEND fail:', response.statusCode);
