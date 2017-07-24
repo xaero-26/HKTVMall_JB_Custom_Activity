@@ -2,8 +2,8 @@
     "workflowApiVersion": "1.1",
     "metaData": {
         "version": "2.0",
-        "icon": "images/KFC-JB-Icon.png",
-        "iconSmall": "images/KFC-JB-Icon.png"
+        "icon": "images/hktvmall-JB-Icon.png",
+        "iconSmall": "images/hktvmall-JB-Icon.png"
     },
     "type": "REST",
     "lang": {
