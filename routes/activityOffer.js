@@ -67,9 +67,10 @@ exports.validate = function( req, res ) {
 exports.execute = function( req, res ) {
     // Data from the req and put it in an array accessible to the main app.
     activityUtils.logData( req );
+    console.log('serena: url=' + activityUtils.endpOintcreds.host);
 
 	//merge the array of objects for easy access in code.
-	var aArgs = req.body.inArguments;
+	/*var aArgs = req.body.inArguments;
 	console.log( aArgs );
 	var oArgs = {};
 	for (var i=0; i<aArgs.length; i++) {  
@@ -124,7 +125,7 @@ exports.execute = function( req, res ) {
     	"s": hash_signature
 	});
 	
-	console.log(post_data);	
+	console.log(post_data);	*/
 
 	var options = {
 		'hostname': activityUtils.endpOintcreds.host,
@@ -134,7 +135,7 @@ exports.execute = function( req, res ) {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json, charset=\"utf-16\"',
 			//'Authorization':'Basic '+activityUtils.endpOintcreds.token,
-			'Content-Length': Buffer.byteLength(post_data)
+			//'Content-Length': Buffer.byteLength(post_data)
 		},
 	};				
 	
