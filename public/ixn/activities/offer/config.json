@@ -15,10 +15,10 @@
     "arguments": {
         "execute": {       
             "inArguments":[
-                { "firstName":"hktvmall-serena"},
-                { "lastName":"hktvmall-li"},
-                { "deviceID":"hktvmall-deviceid"},
-                { "emailAddress": "serenali@hktvmall.com"} 
+                { "muid":"{{Contact.Attribute.Journey_Entry_4.PK}}"},
+                { "Name":"{{Contact.Attribute.Journey_Entry_4.Name}}"},
+                { "SubscriberKey":"{{Contact.Attribute.Journey_Entry_4.SubscriberKey}}"},
+                { "EmailAddress": "{{Contact.Attribute.Journey_Entry_4.EmailAddress}}"} 
             ],
             "outArguments": [
             	{ "pushId":"number" }

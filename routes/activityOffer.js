@@ -1,5 +1,6 @@
 'use strict';
 var https = require( 'https' );
+var crypto = require('crypto');
 var activityUtils = require('./activityUtils');
 
 /*
@@ -80,13 +81,14 @@ exports.execute = function( req, res ) {
 	var contactKey = req.body.keyValue;
 
 	// these values come from the config.json
-	var Email = oArgs.emailAddress;
-	var FirstName = oArgs.firstName;
-	var LastName = oArgs.lastName;
-	var deviceid = "serena_deviceid";//"oArgs.deviceID";
-	activityUtils.logData('Serena: Email=' + Email );
-	activityUtils.logData('Serena: FirstName=' + FirstName );
-	activityUtils.logData('Serena: LastName=' + LastName );
+	var EmailAddress = oArgs.EmailAddress;
+	var Name = oArgs.Name;
+	var muid = oArgs.muid;
+	var SubscriberKey = oArgs.SubscriberKey;
+	activityUtils.logData('Serena: EmailAddress=' + EmailAddress);
+	activityUtils.logData('Serena: Name=' + Name);
+	activityUtils.logData('Serena: muid=' + muid);
+	activityUtils.logData('Serena: SubscriberKey=' + SubscriberKey);
 
 	// these values come from the custom activity form inputs
 	var pushMessage = oArgs.pushMessage;
@@ -102,22 +104,24 @@ exports.execute = function( req, res ) {
 	}
 	var template = pushMessage;
 	
-	var pushMessageText = SFMCTemplateEngine(template, {FirstName: FirstName, LastName: LastName});
+	//var pushMessageText = SFMCTemplateEngine(template, {Name: Name});
 	
+	// Prepare post data for remote API
+	var pushInfo = JSON.stringify({ 
+    "pushInfo": [{"muid": muid, msg: pushMessage}]
+	});
 
-	
-	// Prepare post data for Carnival API
+	var endpoint = activityUtils.endpOintcreds.host + '/post';
+	var secret = "NLNVFS9x7qmKrWWYLbUAq3TgQH8JjUFW";
+	var signature = endpoint + pushInfo + secret;
+	var hash_signature = crypto.createHash('md5').update(signature).digest('hex');
+	activityUtils.logData('Serena: pushInfo=' + pushInfo);
+	activityUtils.logData('Serena: signature=' + signature);
+	activityUtils.logData('Serena: hash_signature=' + hash_signature);
+
 	var post_data = JSON.stringify({ 
-    "notification": {   
-    "to": [{ "name": "device_id", "criteria": [deviceid]}],
-    "payload": {
-        "alert": pushMessageText,
-        "badge": 1,
-        "sound": "Default.caf",    
-        "category": "TEST_CATEGORY",    
-        "any_key": "any_value"
-        }  
-    	}
+    	"pushInfo": pushInfo,
+    	"s": hash_signature
 	});
 	
 	console.log(post_data);	
@@ -129,7 +133,7 @@ exports.execute = function( req, res ) {
 		'headers': {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json, charset=\"utf-16\"',
-			'Authorization':'Basic '+activityUtils.endpOintcreds.token,
+			//'Authorization':'Basic '+activityUtils.endpOintcreds.token,
 			'Content-Length': Buffer.byteLength(post_data)
 		},
 	};				
