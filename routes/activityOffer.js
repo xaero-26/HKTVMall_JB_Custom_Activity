@@ -111,7 +111,7 @@ exports.execute = function( req, res ) {
     "pushInfo": [{"muid": muid, msg: pushMessage}]
 	});
 
-	var endpoint = activityUtils.endpOintcreds.host + '/post';
+	var endpoint = activityUtils.endpOintcreds.host + '/posts';
 	var secret = "NLNVFS9x7qmKrWWYLbUAq3TgQH8JjUFW";
 	var signature = endpoint + pushInfo + secret;
 	var hash_signature = crypto.createHash('md5').update(signature).digest('hex');
@@ -128,7 +128,7 @@ exports.execute = function( req, res ) {
 
 	var options = {
 		'hostname': activityUtils.endpOintcreds.host,
-		'path': '/post',
+		'path': '/posts',
 		'method': 'POST',
 		'headers': {
 			'Accept': 'application/json',
