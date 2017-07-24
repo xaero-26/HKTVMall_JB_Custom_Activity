@@ -112,7 +112,8 @@ exports.execute = function( req, res ) {
     "pushInfo": [{"muid": muid, msg: pushMessage}]
 	});
 
-	var endpoint = "https://jsonplaceholder.typicode.com/posts";
+	//var endpoint = "https://jsonplaceholder.typicode.com/posts";
+	var endpoint = "http://push-api-dev.hkmpcl.com.hk:8001/api/sf_push";
 	var remoteHost = "jsonplaceholder.typicode.com";
 	var remotePort = "443";
 	var remotePath = "/posts";
