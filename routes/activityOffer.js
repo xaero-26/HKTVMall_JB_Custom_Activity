@@ -67,7 +67,6 @@ exports.validate = function( req, res ) {
 exports.execute = function( req, res ) {
     // Data from the req and put it in an array accessible to the main app.
     activityUtils.logData( req );
-    console.log('serena: url=' + activityUtils.endpOintcreds.host);
 
 	//merge the array of objects for easy access in code.
 	var aArgs = req.body.inArguments;
@@ -117,7 +116,7 @@ exports.execute = function( req, res ) {
 	var remoteHost = "jsonplaceholder.typicode.com";
 	var remotePort = "443";
 	var remotePath = "/posts";
-	var secret = "NLNVFS9x7qmKrWWYLbUAq3TgQH8JjUFW";
+	var secret = process.env.API_Secret;
 	var signature = endpoint + pushInfo + secret;
 	var hash_signature = crypto.createHash('md5').update(signature).digest('hex');
 	console.log('Serena: pushInfo=' + pushInfo);
@@ -129,7 +128,7 @@ exports.execute = function( req, res ) {
     	"s": hash_signature
 	});
 	
-	console.log('serena: post_data=' + post_data);
+	console.log('post_data=' + post_data);
 
 	var options = {
 		'hostname': remoteHost,
@@ -144,7 +143,7 @@ exports.execute = function( req, res ) {
 		},
 	};				
 	
-	console.log('serena: options=' + options);
+	console.log('options=' + options);
 
 	var httpsCall = https.request(options, function(response) {
 		var data = '';
@@ -160,7 +159,6 @@ exports.execute = function( req, res ) {
 			if (response.statusCode == 201) {
 				data = JSON.parse(data);
 				console.log('onEND PushResponse:', response.statusCode, data);
-				console.log('Serena: data.id=' + data.id);
 				res.send( 200, {"pushId": data.id} );
 			} else {
 				console.log('onEND fail:', response.statusCode);
