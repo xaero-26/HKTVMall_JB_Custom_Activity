@@ -21,7 +21,7 @@
                 { "EmailAddress": "{{Contact.Attribute.Journey_Entry_4.EmailAddress}}"} 
             ],
             "outArguments": [
-            	{ "StatusCode":"number" }
+            	{ "pushId":"number" }
 			],			
 			"url": "https://fierce-ravine-95058.herokuapp.com/ixn/activities/offer/execute/",
             "verb": "POST",

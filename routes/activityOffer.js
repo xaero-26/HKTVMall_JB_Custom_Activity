@@ -163,10 +163,10 @@ exports.execute = function( req, res ) {
 			if (response.statusCode == 201) {
 				data = JSON.parse(data);
 				console.log('onEND PushResponse:', response.statusCode, data);
-				res.send(200, {"StatusCode": 200});
+				res.send(200, {"pushId": 200});
 			} else {
 				console.log('onEND fail:', response.statusCode);
-				res.send(response.statusCode, {"StatusCode": response.statusCode});
+				res.send(response.statusCode, {"pushId": response.statusCode});
 			}		
 		});								
 	});
