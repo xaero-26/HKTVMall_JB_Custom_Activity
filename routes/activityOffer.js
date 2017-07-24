@@ -125,7 +125,7 @@ exports.execute = function( req, res ) {
     	"s": hash_signature
 	});
 	
-	console.log(post_data);	*/
+	console.log(post_data);*/
 
 	var options = {
 		'hostname': activityUtils.endpOintcreds.host,
@@ -168,7 +168,7 @@ exports.execute = function( req, res ) {
 		res.send(500, 'createCase', {}, { error: e });
 	});				
 	
-	httpsCall.write(post_data);
+	//httpsCall.write(post_data);
 	httpsCall.end();
 
 };
