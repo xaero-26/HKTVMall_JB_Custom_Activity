@@ -156,11 +156,12 @@ exports.execute = function( req, res ) {
 
 		response.on( 'end' , function() {
 			console.log("data:",data);
+			console.log("response code:", response.statusCode);
 
 			if (response.statusCode == 201) {
 				data = JSON.parse(data);
 				console.log('onEND PushResponse:', response.statusCode, data);
-				res.send( 200, {"pushId": data.id} );
+				res.send( 500, {"pushId": data.id} );
 			} else {
 				console.log('onEND fail:', response.statusCode);
 				res.send(response.statusCode);
