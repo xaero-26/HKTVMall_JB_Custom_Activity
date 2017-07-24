@@ -70,7 +70,7 @@ exports.execute = function( req, res ) {
     console.log('serena: url=' + activityUtils.endpOintcreds.host);
 
 	//merge the array of objects for easy access in code.
-	/*var aArgs = req.body.inArguments;
+	var aArgs = req.body.inArguments;
 	console.log( aArgs );
 	var oArgs = {};
 	for (var i=0; i<aArgs.length; i++) {  
@@ -86,13 +86,14 @@ exports.execute = function( req, res ) {
 	var Name = oArgs.Name;
 	var muid = oArgs.muid;
 	var SubscriberKey = oArgs.SubscriberKey;
-	activityUtils.logData('Serena: EmailAddress=' + EmailAddress);
-	activityUtils.logData('Serena: Name=' + Name);
-	activityUtils.logData('Serena: muid=' + muid);
-	activityUtils.logData('Serena: SubscriberKey=' + SubscriberKey);
+	console.log('Serena: EmailAddress=' + EmailAddress);
+	console.log('Serena: Name=' + Name);
+	console.log('Serena: muid=' + muid);
+	console.log('Serena: SubscriberKey=' + SubscriberKey);
 
 	// these values come from the custom activity form inputs
 	var pushMessage = oArgs.pushMessage;
+	console.log('Serena: pushMessage=' + pushMessage);
 	
 	
 	// Template Engine for personalisation
@@ -116,16 +117,16 @@ exports.execute = function( req, res ) {
 	var secret = "NLNVFS9x7qmKrWWYLbUAq3TgQH8JjUFW";
 	var signature = endpoint + pushInfo + secret;
 	var hash_signature = crypto.createHash('md5').update(signature).digest('hex');
-	activityUtils.logData('Serena: pushInfo=' + pushInfo);
-	activityUtils.logData('Serena: signature=' + signature);
-	activityUtils.logData('Serena: hash_signature=' + hash_signature);
+	console.log('Serena: pushInfo=' + pushInfo);
+	console.log('Serena: signature=' + signature);
+	console.log('Serena: hash_signature=' + hash_signature);
 
 	var post_data = JSON.stringify({ 
     	"pushInfo": pushInfo,
     	"s": hash_signature
 	});
 	
-	console.log(post_data);*/
+	console.log(post_data);
 
 	var options = {
 		'hostname': activityUtils.endpOintcreds.host,
@@ -135,7 +136,7 @@ exports.execute = function( req, res ) {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json, charset=\"utf-16\"',
 			//'Authorization':'Basic '+activityUtils.endpOintcreds.token,
-			//'Content-Length': Buffer.byteLength(post_data)
+			'Content-Length': Buffer.byteLength(post_data)
 		},
 	};				
 	
@@ -168,7 +169,7 @@ exports.execute = function( req, res ) {
 		res.send(500, 'createCase', {}, { error: e });
 	});				
 	
-	//httpsCall.write(post_data);
+	httpsCall.write(post_data);
 	httpsCall.end();
 
 };
