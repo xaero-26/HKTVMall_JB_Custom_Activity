@@ -105,11 +105,12 @@ exports.execute = function( req, res ) {
 	}
 	var template = pushMessage;
 	
-	//var pushMessageText = SFMCTemplateEngine(template, {Name: Name});
+	var pushMessageText = SFMCTemplateEngine(template, {Name: Name});
+	console.log('Serena: pushMessageText=' + pushMessageText);
 	
 	// Prepare post data for remote API
 	var pushInfo = JSON.stringify({ 
-    "pushInfo": [{"muid": muid, msg: pushMessage}]
+    "pushInfo": [{"muid": muid, msg: pushMessageText}]
 	});
 
 	//var endpoint = "https://jsonplaceholder.typicode.com/posts";
@@ -125,7 +126,7 @@ exports.execute = function( req, res ) {
 	console.log('Serena: hash_signature=' + hash_signature);
 
 	var post_data = JSON.stringify({ 
-    	"pushInfo": [{"muid": muid, msg: pushMessage}],
+    	"pushInfo": [{"muid": muid, msg: pushMessageText}],
     	"s": hash_signature
 	});
 	
@@ -157,6 +158,7 @@ exports.execute = function( req, res ) {
 		response.on( 'end' , function() {
 			console.log("data:",data);
 			console.log("response code:", response.statusCode);
+			console.log("serena: SubscriberKey:",SubscriberKey);
 
 			if (response.statusCode == 201) {
 				data = JSON.parse(data);
