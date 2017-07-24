@@ -124,7 +124,7 @@ exports.execute = function( req, res ) {
 	console.log('Serena: hash_signature=' + hash_signature);
 
 	var post_data = JSON.stringify({ 
-    	"pushInfo": pushInfo,
+    	pushInfo,
     	"s": hash_signature
 	});
 	
