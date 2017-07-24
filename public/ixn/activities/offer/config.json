@@ -8,7 +8,7 @@
     "type": "REST",
     "lang": {
         "en-US": {
-            "name": "HKTVMALL Push Test",
+            "name": "HKTVMALL Push Message",
             "description": "Activity for HKTVMALL custom push messages"
         }
     },
