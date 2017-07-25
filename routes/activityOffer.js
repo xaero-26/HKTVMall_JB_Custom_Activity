@@ -85,14 +85,9 @@ exports.execute = function( req, res ) {
 	var Name = oArgs.Name;
 	var muid = oArgs.muid;
 	var SubscriberKey = oArgs.SubscriberKey;
-	console.log('Serena: EmailAddress=' + EmailAddress);
-	console.log('Serena: Name=' + Name);
-	console.log('Serena: muid=' + muid);
-	console.log('Serena: SubscriberKey=' + SubscriberKey);
 
 	// these values come from the custom activity form inputs
 	var pushMessage = oArgs.pushMessage;
-	console.log('Serena: pushMessage=' + pushMessage);
 	
 	
 	// Template Engine for personalisation
@@ -106,7 +101,7 @@ exports.execute = function( req, res ) {
 	var template = pushMessage;
 	
 	var pushMessageText = SFMCTemplateEngine(template, {Name: Name});
-	console.log('Serena: pushMessageText=' + pushMessageText);
+	console.log('pushMessageText=' + pushMessageText);
 	
 	// Prepare post data for remote API
 	var pushInfo = JSON.stringify({ 
@@ -121,9 +116,6 @@ exports.execute = function( req, res ) {
 	var secret = process.env.API_Secret;
 	var signature = endpoint + pushInfo + secret;
 	var hash_signature = crypto.createHash('md5').update(signature).digest('hex');
-	console.log('Serena: pushInfo=' + pushInfo);
-	console.log('Serena: signature=' + signature);
-	console.log('Serena: hash_signature=' + hash_signature);
 
 	var post_data = JSON.stringify({ 
     	"pushInfo": [{"muid": muid, msg: pushMessageText}],
@@ -158,7 +150,6 @@ exports.execute = function( req, res ) {
 		response.on( 'end' , function() {
 			console.log("data:",data);
 			console.log("response code:", response.statusCode);
-			console.log("serena: SubscriberKey:",SubscriberKey);
 
 			if (response.statusCode == 201) {
 				data = JSON.parse(data);
