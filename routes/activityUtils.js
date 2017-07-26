@@ -47,6 +47,5 @@ exports.endpOintcreds = {
 	userpw: ''
 };
 
-//exports.endpOintcreds.host = 'api.carnivalmobile.com'; 
-exports.endpOintcreds.host = 'https://jsonplaceholder.typicode.com';
+exports.endpOintcreds.host = 'api.carnivalmobile.com'; 
 exports.endpOintcreds.token = new Buffer(exports.endpOintcreds.username + ':' + exports.endpOintcreds.userpw).toString('base64');
