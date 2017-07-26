@@ -109,10 +109,10 @@ exports.execute = function( req, res ) {
 	});
 
 	//var endpoint = "https://jsonplaceholder.typicode.com/posts";
-	var endpoint = "http://push-api-dev.hkmpcl.com.hk:8001/api/sf_push";
-	var remoteHost = "jsonplaceholder.typicode.com";
-	var remotePort = "443";
-	var remotePath = "/posts";
+	var endpoint = process.env.Remote_URL;
+	var remoteHost = process.env.Remote_Host;
+	var remotePort = process.env.Remote_Port;
+	var remotePath = process.env.Remote_Path;
 	var secret = process.env.API_Secret;
 	var signature = endpoint + pushInfo + secret;
 	var hash_signature = crypto.createHash('md5').update(signature).digest('hex');
