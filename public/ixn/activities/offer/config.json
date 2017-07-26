@@ -17,7 +17,6 @@
             "inArguments":[
                 { "muid":"{{Contact.Attribute.Journey_Entry_4.PK}}"},
                 { "Name":"{{Contact.Attribute.Journey_Entry_4.Name}}"},
-                { "Timestamp":"{{Contact.Attribute.Journey_Entry_4.Timestamp}}"},
                 { "SubscriberKey":"{{Contact.Attribute.Journey_Entry_4.SubscriberKey}}"},
                 { "EmailAddress": "{{Contact.Attribute.Journey_Entry_4.EmailAddress}}"} 
             ],
