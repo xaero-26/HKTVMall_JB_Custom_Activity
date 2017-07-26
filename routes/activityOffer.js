@@ -67,7 +67,10 @@ exports.validate = function( req, res ) {
 exports.execute = function( req, res ) {
     // Data from the req and put it in an array accessible to the main app.
     activityUtils.logData( req );
+    remote_call(req,res);
+};
 
+function remote_call(req,res) {
 	//merge the array of objects for easy access in code.
 	var aArgs = req.body.inArguments;
 	console.log( aArgs );
@@ -110,9 +113,6 @@ exports.execute = function( req, res ) {
 
 	//var endpoint = "https://jsonplaceholder.typicode.com/posts";
 	var endpoint = process.env.Remote_URL;
-	var remoteHost = process.env.Remote_Host;
-	var remotePort = process.env.Remote_Port;
-	var remotePath = process.env.Remote_Path;
 	var secret = process.env.API_Secret;
 	var signature = endpoint + pushInfo + secret;
 	var hash_signature = crypto.createHash('md5').update(signature).digest('hex');
@@ -124,6 +124,29 @@ exports.execute = function( req, res ) {
 	
 	console.log('post_data=' + post_data);
 
+	function controller(status, msg, data, err){
+		if (err) {
+			console.log('controller error', msg, status, data, 'error', err);
+			res.json( status, err );
+			return;
+		}
+		if (msg == 'log_status') {
+			console.log('controller log_status', data);
+			log_status(SubscriberKey, data.status, data.statusdesc, controller);
+		}
+		if (msg == 'end_call') {
+			console.log('controller end_call', data);
+			res.send(200, {"pushId": data.status});
+		}
+			
+	};
+	call_api(post_data, controller); 
+};
+
+function call_api(post_data, next) {
+	var remoteHost = process.env.Remote_Host;
+	var remotePort = process.env.Remote_Port;
+	var remotePath = process.env.Remote_Path;
 	var options = {
 		'hostname': remoteHost,
 		'port': remotePort,
@@ -137,7 +160,6 @@ exports.execute = function( req, res ) {
 		},
 	};				
 	
-	console.log('options=' + options);
 
 	var httpsCall = https.request(options, function(response) {
 		var data = '';
@@ -154,20 +176,59 @@ exports.execute = function( req, res ) {
 			if (response.statusCode == 201) {
 				data = JSON.parse(data);
 				console.log('onEND PushResponse:', response.statusCode, data);
-				res.send(200, {"pushId": 200});
+				//res.send(200, {"pushId": 200});
 			} else {
 				console.log('onEND fail:', response.statusCode);
-				res.send(response.statusCode, {"pushId": response.statusCode});
-			}		
+				error = data.error.msg;
+				//res.send(response.statusCode, {"pushId": response.statusCode});
+			}
+			next(response.statusCode, 'log_status', {status: response.statusCode, statusdesc: error});		
 		});								
 	});
 
 	httpsCall.on( 'error', function( e ) {
 		console.error(e);
-		res.send(500, 'createCase', {}, { error: e });
+		next(500, 'log_status', {}, { error: e });
+		//res.send(500, 'createCase', {}, { error: e });
 	});				
 	
 	httpsCall.write(post_data);
 	httpsCall.end();
+};
 
+function log_status(subkey, status, statusdesc, next) {
+	console.log('log_status', subkey, status, statusdesc);	
+
+	var remoteHost = process.env.Cloudpage_Host;
+	var remotePort = process.env.Cloudpage_Port;
+	var remotePath = process.env.Cloudpage_Path + "?subkey=" + encodeURIComponent(subkey) + "&status=" + encodeURIComponent(status) + "&statusdesc=" + encodeURIComponent(statusdesc);
+	console.log('remotePath=', remotePath);
+	var options = {
+		'hostname': remoteHost,
+		'port': remotePort,
+		'path': remotePath,
+		'method': 'GET',
+	};				
+	
+	var httpsCall = https.request(options, function(response) {
+		var data = ''
+			,redirect = ''
+			,error = ''
+			;
+		response.on( 'data' , function( chunk ) {
+			data += chunk;
+		} );	
+
+		response.on( 'end' , function() {
+			console.log("response code:", response.statusCode);
+			next(response.statusCode, 'end_call', {status: response.statusCode});	
+		});												
+
+	});
+	httpsCall.on( 'error', function( e ) {
+		console.error(e);
+		next(500, 'log_status', {}, { error: e });
+	});				
+	
+	httpsCall.end();
 };
