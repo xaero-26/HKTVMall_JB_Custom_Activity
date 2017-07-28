@@ -109,12 +109,15 @@ function remote_call(req,res) {
 	// Prepare post data for remote API
 	//var pushInfo = JSON.stringify([{"muid": muid, "msg": pushMessageText}]);
 	var pushInfo = JSON.stringify([{"muid":"9161521889284","msg":" ","url":"","badge":1}]);
+	console.log('pushInfo=', pushInfo);
 
 	//var endpoint = "https://jsonplaceholder.typicode.com/posts";
 	var endpoint = process.env.Remote_URL;
 	var secret = process.env.API_Secret;
 	var signature = endpoint + pushInfo + secret;
+	console.log('signature=', signature);
 	var hash_signature = crypto.createHash('md5').update(signature).digest('hex');
+	console.log('hash_signature=', hash_signature);
 
 	var post_data = JSON.stringify({ 
     	"pushInfo": [{"muid": muid, "msg": pushMessageText}],
