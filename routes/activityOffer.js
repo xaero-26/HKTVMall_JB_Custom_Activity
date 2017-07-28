@@ -116,7 +116,7 @@ function remote_call(req,res) {
 	var secret = process.env.API_Secret;
 	var signature = endpoint + pushInfo + secret;
 	console.log('signature=' + signature);
-	var hash_signature = crypto.createHash('md5').update(signature).digest('hex');
+	var hash_signature = crypto.createHash('md5').update(signature, 'utf8').digest('hex');
 
 	var post_data = "pushInfo=" + encodeURIComponent(pushInfo) + "&s=" + encodeURIComponent(hash_signature);
 	
