@@ -107,9 +107,8 @@ function remote_call(req,res) {
 	console.log('pushMessageText=' + pushMessageText);
 	
 	// Prepare post data for remote API
-	var pushInfo = JSON.stringify({ 
-    "pushInfo": [{"muid": muid, msg: pushMessageText}]
-	});
+	//var pushInfo = JSON.stringify([{"muid": muid, "msg": pushMessageText}]);
+	var pushInfo = JSON.stringify([{"muid":"9161521889284","msg":" ","url":"","badge":1}]);
 
 	//var endpoint = "https://jsonplaceholder.typicode.com/posts";
 	var endpoint = process.env.Remote_URL;
@@ -118,7 +117,7 @@ function remote_call(req,res) {
 	var hash_signature = crypto.createHash('md5').update(signature).digest('hex');
 
 	var post_data = JSON.stringify({ 
-    	"pushInfo": [{"muid": muid, msg: pushMessageText}],
+    	"pushInfo": [{"muid": muid, "msg": pushMessageText}],
     	"s": hash_signature
 	});
 	
@@ -132,7 +131,7 @@ function remote_call(req,res) {
 		}
 		if (msg == 'log_status') {
 			console.log('controller log_status', data);
-			log_status(SubscriberKey, data.status, data.statusdesc, controller);
+			log_status(SubscriberKey, data.status, data.statusCode, data.statusdesc, controller);
 		}
 		if (msg == 'end_call') {
 			console.log('controller end_call', data);
@@ -173,22 +172,23 @@ function call_api(post_data, next) {
 			console.log("data:",data);
 			console.log("response code:", response.statusCode);
 
-			if (response.statusCode == 201) {
+			if (response.statusCode == 200) {
 				data = JSON.parse(data);
 				console.log('onEND PushResponse:', response.statusCode, data);
 				//res.send(200, {"pushId": 200});
+				next(response.statusCode, 'log_status', {status: data.result, statusCode: data.result.error.code, statusdesc: data.result.error.message});
 			} else {
 				console.log('onEND fail:', response.statusCode);
-				error = data.error.msg;
+				next(response.statusCode, 'log_status', {status: 'error', statusCode: response.statusCode, statusdesc: 'unknown error'});
 				//res.send(response.statusCode, {"pushId": response.statusCode});
 			}
-			next(response.statusCode, 'log_status', {status: response.statusCode, statusdesc: error});		
+					
 		});								
 	});
 
 	httpsCall.on( 'error', function( e ) {
 		console.error(e);
-		next(500, 'log_status', {}, { error: e });
+		next(500, 'log_status', {status: 'error', statusCode: '555', statusdesc: e}, { error: e });
 		//res.send(500, 'createCase', {}, { error: e });
 	});				
 	
@@ -196,12 +196,12 @@ function call_api(post_data, next) {
 	httpsCall.end();
 };
 
-function log_status(subkey, status, statusdesc, next) {
+function log_status(subkey, status, statusCode, statusdesc, next) {
 	console.log('log_status', subkey, status, statusdesc);	
 
 	var remoteHost = process.env.Cloudpage_Host;
 	var remotePort = process.env.Cloudpage_Port;
-	var remotePath = process.env.Cloudpage_Path + "?subkey=" + encodeURIComponent(subkey) + "&status=" + encodeURIComponent(status) + "&statusdesc=" + encodeURIComponent(statusdesc);
+	var remotePath = process.env.Cloudpage_Path + "?subkey=" + encodeURIComponent(subkey) + "&status=" + encodeURIComponent(status) + "&statuscode=" + encodeURIComponent(statusCode) + "&statusdesc=" + encodeURIComponent(statusdesc);
 	console.log('remotePath=', remotePath);
 	var options = {
 		'hostname': remoteHost,
