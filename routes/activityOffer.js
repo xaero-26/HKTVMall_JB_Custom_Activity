@@ -196,12 +196,14 @@ function call_api(post_data, next) {
 	httpsCall.end();
 };
 
-function log_status(subkey, status, statusCode, statusdesc, next) {
+function log_status(subkey, status, statuscode, statusdesc, next) {
 	console.log('log_status', subkey, status, statusdesc);	
 
 	var remoteHost = process.env.Cloudpage_Host;
 	var remotePort = process.env.Cloudpage_Port;
-	var remotePath = process.env.Cloudpage_Path + "?subkey=" + encodeURIComponent(subkey) + "&status=" + encodeURIComponent(status) + "&statuscode=" + encodeURIComponent(statusCode) + "&statusdesc=" + encodeURIComponent(statusdesc);
+	var remotePath = process.env.Cloudpage_Path + "?subkey=" + encodeURIComponent(subkey) + "&status=" + encodeURIComponent(status) + "&statuscode=" + encodeURIComponent(statuscode) + "&statusdesc=" + encodeURIComponent(statusdesc);
+	console.log('remoteHost=', remoteHost);
+	console.log('remotePort=', remotePort);
 	console.log('remotePath=', remotePath);
 	var options = {
 		'hostname': remoteHost,
@@ -220,12 +222,14 @@ function log_status(subkey, status, statusCode, statusdesc, next) {
 		} );	
 
 		response.on( 'end' , function() {
+			console.log('response from cloud page call');
 			console.log("response code:", response.statusCode);
 			next(response.statusCode, 'end_call', {status: response.statusCode});	
 		});												
 
 	});
 	httpsCall.on( 'error', function( e ) {
+		console.log('there is error with cloud page call');
 		console.error(e);
 		next(500, 'log_status', {}, { error: e });
 	});				
