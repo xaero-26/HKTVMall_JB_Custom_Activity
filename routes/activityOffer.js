@@ -109,6 +109,7 @@ function remote_call(req,res) {
 	// Prepare post data for remote API
 	var pushInfo = JSON.stringify([{"muid": muid, "msg": pushMessageText}]);
 	//var pushInfo = JSON.stringify([{"muid":"9161521889284","msg":" _","url":"","badge":1}]);
+	console.log('pushInfo=' + pushInfo);
 
 	//var endpoint = "https://jsonplaceholder.typicode.com/posts";
 	var endpoint = process.env.Remote_Endpoint;
