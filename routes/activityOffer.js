@@ -111,7 +111,7 @@ function remote_call(req,res) {
 	var pushInfo = JSON.stringify([{"muid":"9161521889284","msg":" _","url":"","badge":1}]);
 
 	//var endpoint = "https://jsonplaceholder.typicode.com/posts";
-	var endpoint = process.env.Remote_URL;
+	var endpoint = process.env.Remote_Endpoint;
 	var secret = process.env.API_Secret;
 	var signature = endpoint + pushInfo + secret;
 	var hash_signature = crypto.createHash('md5').update(signature).digest('hex');
