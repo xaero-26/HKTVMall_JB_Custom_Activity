@@ -116,10 +116,7 @@ function remote_call(req,res) {
 	var signature = endpoint + pushInfo + secret;
 	var hash_signature = crypto.createHash('md5').update(signature).digest('hex');
 
-	var post_data = JSON.stringify({ 
-    	"pushInfo": [{"muid": muid, "msg": pushMessageText}],
-    	"s": hash_signature
-	});
+	var post_data = "pushInfo=" + encodeURIComponent(pushInfo) + "&s=" + encodeURIComponent(hash_signature);
 	
 	console.log('post_data=' + post_data);
 
@@ -153,7 +150,7 @@ function call_api(post_data, next) {
 		'method': 'POST',
 		'headers': {
 			'Accept': 'application/json',
-			'Content-Type': 'application/json, charset=\"utf-16\"',
+			'Content-Type': 'application/x-www-form-urlencoded',
 			//'Authorization':'Basic '+activityUtils.endpOintcreds.token,
 			'Content-Length': Buffer.byteLength(post_data)
 		},
