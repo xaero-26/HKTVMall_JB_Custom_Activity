@@ -198,7 +198,7 @@ function log_status(subkey, status, statuscode, statusdesc, next) {
 
 	var remoteHost = process.env.Cloudpage_Host;
 	var remotePort = process.env.Cloudpage_Port;
-	var remotePath = process.env.Cloudpage_Path;// + "?subkey=" + encodeURIComponent(subkey) + "&status=" + encodeURIComponent(status) + "&statuscode=" + encodeURIComponent(statuscode) + "&statusdesc=" + encodeURIComponent(statusdesc);
+	var remotePath = process.env.Cloudpage_Path + "?subkey=" + encodeURIComponent(subkey) + "&status=" + encodeURIComponent(status) + "&statuscode=" + encodeURIComponent(statuscode) + "&statusdesc=" + encodeURIComponent(statusdesc);
 	console.log('remoteHost=', remoteHost);
 	console.log('remotePort=', remotePort);
 	console.log('remotePath=', remotePath);
