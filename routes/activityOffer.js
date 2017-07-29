@@ -207,7 +207,8 @@ function log_status(subkey, status, statuscode, statusdesc, next) {
 		'method': 'GET',
 	};				
 	
-	var httpsCall = https.request(options, function(response) {
+	//var httpsCall = https.request(options, function(response) {
+	var httpsCall = http.request(options, function(response) {
 		var data = ''
 			,redirect = ''
 			,error = ''
