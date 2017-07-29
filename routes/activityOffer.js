@@ -1,5 +1,6 @@
 'use strict';
 var https = require( 'https' );
+var http = require('http');
 var crypto = require('crypto');
 var activityUtils = require('./activityUtils');
 
