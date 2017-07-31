@@ -122,11 +122,6 @@ function remote_call(req,res) {
 	console.log('post_data=' + post_data);
 
 	function controller(status, msg, data, err){
-		if (err) {
-			console.log('controller error', msg, status, data, 'error', err);
-			res.json( status, err );
-			return;
-		}
 		if (msg == 'log_status') {
 			console.log('controller log_status', data);
 			log_status(SubscriberKey, data.status, data.statusCode, data.statusdesc, controller);
@@ -158,7 +153,7 @@ function call_api(post_data, next) {
 	};				
 	
 
-	var httpsCall = https.request(options, function(response) {
+	var httpsCall = http.request(options, function(response) {
 		var data = '';
 		var error = '';
 			
@@ -189,7 +184,7 @@ function call_api(post_data, next) {
 
 	httpsCall.on( 'error', function( e ) {
 		console.error(e);
-		next(500, 'log_status', {status: 'API error', statusCode: '', statusdesc: e}, { error: e });
+		next(500, 'log_status', {status: 'API error', statusCode: '', statusdesc: e});
 		//res.send(500, 'createCase', {}, { error: e });
 	});				
 	
