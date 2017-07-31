@@ -33,7 +33,7 @@
         }
     },
     "configurationArguments": {
-    	"applicationExtensionKey": "hktvmall-jb-custom-activity",
+    	"applicationExtensionKey": "hktvmall-jb-customactivity",
         "defaults": { "example_default_key": "example_default_value"},             
         "save": {
         	"url": "https://hktvmall-jb-custom-activity.herokuapp.com/ixn/activities/offer/save/",
