@@ -198,6 +198,7 @@ function log_status(subkey, status, statuscode, statusdesc, next) {
 	var remoteHost = process.env.Cloudpage_Host;
 	var remotePort = process.env.Cloudpage_Port;
 	var remotePath = process.env.Cloudpage_Path + "?subkey=" + encodeURIComponent(subkey) + "&status=" + encodeURIComponent(status) + "&statuscode=" + encodeURIComponent(statuscode) + "&statusdesc=" + encodeURIComponent(statusdesc);
+	console.log('log_status remotePath=', remotePath);
 	var options = {
 		'hostname': remoteHost,
 		'port': remotePort,
@@ -224,7 +225,7 @@ function log_status(subkey, status, statuscode, statusdesc, next) {
 	httpsCall.on( 'error', function( e ) {
 		console.log('log_status call has error');
 		console.error(e);
-		next(500, 'log_status', {}, { error: e });
+		next(500, 'end_call', {status: 'unknown error'});
 	});				
 	
 	httpsCall.end();
