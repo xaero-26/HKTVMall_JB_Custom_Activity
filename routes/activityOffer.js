@@ -184,7 +184,7 @@ function call_api(post_data, next) {
 
 	httpsCall.on( 'error', function( e ) {
 		console.error(e);
-		next(500, 'log_status', {status: 'API error', statusCode: '', statusdesc: e});
+		next(500, 'log_status', {status: 'API error', statusCode: 'N.A.', statusdesc: e});
 		//res.send(500, 'createCase', {}, { error: e });
 	});				
 	
