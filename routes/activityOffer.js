@@ -109,7 +109,6 @@ function remote_call(req,res) {
 	
 	// Prepare post data for remote API
 	var pushInfo = JSON.stringify([{"muid": muid, "msg": pushMessageText}]);
-	//var pushInfo = JSON.stringify([{"muid":"9161521889284","msg":" _","url":"","badge":1}]);
 	console.log('pushInfo=' + pushInfo);
 
 	//var endpoint = "https://jsonplaceholder.typicode.com/posts";
@@ -175,10 +174,13 @@ function call_api(post_data, next) {
 				data = JSON.parse(data);
 				console.log('onEND PushResponse:', response.statusCode, data);
 				//res.send(200, {"pushId": 200});
-				next(response.statusCode, 'log_status', {status: data.result, statusCode: data.result.error.code, statusdesc: data.result.error.message});
+				if (data.result == 'success')
+					next(response.statusCode, 'log_status', {status: data.result, statusCode: response.statusCode, statusdesc: data.result});
+				else
+					next(response.statusCode, 'log_status', {status: data.result, statusCode: data.error.code, statusdesc: data.error.msg});
 			} else {
 				console.log('onEND fail:', response.statusCode);
-				next(response.statusCode, 'log_status', {status: 'error', statusCode: response.statusCode, statusdesc: 'unknown error'});
+				next(response.statusCode, 'log_status', {status: 'API error', statusCode: response.statusCode, statusdesc: ''});
 				//res.send(response.statusCode, {"pushId": response.statusCode});
 			}
 					
@@ -187,7 +189,7 @@ function call_api(post_data, next) {
 
 	httpsCall.on( 'error', function( e ) {
 		console.error(e);
-		next(500, 'log_status', {status: 'error', statusCode: '555', statusdesc: e}, { error: e });
+		next(500, 'log_status', {status: 'API error', statusCode: '', statusdesc: e}, { error: e });
 		//res.send(500, 'createCase', {}, { error: e });
 	});				
 	
